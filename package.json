@@ -1,0 +1,29 @@
+{
+  "name": "openlayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "wangct-webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "antd": "^3.20.7",
+    "cheerio": "^1.0.0-rc.3",
+    "history": "^4.9.0",
+    "iconv-lite": "^0.4.24",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "request": "^2.88.0",
+    "wangct-mysql": "^1.0.9",
+    "wangct-react": "^1.0.19",
+    "wangct-react-entry": "^1.0.4",
+    "wangct-server-util": "^1.0.36",
+    "wangct-util": "^1.0.49",
+    "wangct-webpack": "^1.0.16"
+  }
+}
