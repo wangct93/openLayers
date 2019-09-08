@@ -113,9 +113,7 @@ class Circle{
     if(!map){
       return;
     }
-
     const points = getCirlePoints(options.center,options.radius,map);
-    console.log(points);
     const feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.LinearRing(points),null,options);
     layer.addFeatures([feature]);
     this.layer = layer;
