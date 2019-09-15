@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import util, {reactUtil} from 'wangct-util';
+import util, {classNames, reactUtil} from 'wangct-util';
 import {Table, Pagination} from 'antd';
 import css from './index.less';
 import CMap from "./openlayers";
@@ -27,7 +27,7 @@ export default class Layout extends PureComponent {
   render() {
     const {state} = this;
     return <div className={css.container}>
-      <div ref={this.setMapElem} className={css.map_box} />
+      <div ref={this.setMapElem} className={classNames(css.map_box,'cmap-box')} />
     </div>
   }
 }

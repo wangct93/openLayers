@@ -1,0 +1,35 @@
+
+@border:1px solid #ddd;
+
+:global{
+  .openlayer-text-content{
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    padding: 10px;
+    border-radius:5px;
+    border:@border;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .cmap-box{
+    .olPopup {
+      overflow: visible !important;
+      width: 0 !important;
+      height: 0 !important;
+      > div{
+        overflow: visible !important;
+      }
+      .olPopupContent{
+        overflow: visible;
+        padding: 0;
+      }
+    }
+  }
+  .cmap-infowindow{
+    background-color: #fff;
+    border: @border;
+    transform: translate(-50%,-100%);
+    border-radius: 5px;
+  }
+}
