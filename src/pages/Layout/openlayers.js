@@ -250,17 +250,18 @@ class InfoWindow{
       if(child instanceof Element){
         parent.appendChild(child);
       }else if(child){
-        const text = document.createTextNode(child);
-        parent.appendChild(text);
+        parent.innerHTML += child;
       }
     };
     if(title){
       const headerElem = document.createElement('div');
       contentElem.parentNode.insertBefore(headerElem,contentElem);
       headerElem.className = 'cmap-infowindow-header';
-      headerElem.innerHTML = '<div class="cmap-infowindow-close"></div>';
-      headerElem.children[0].addEventListener('click',this.close.bind(this));
       setHtml(title,headerElem);
+      const closeElem = document.createElement('div');
+      closeElem.className = 'cmap-infowindow-close';
+      closeElem.addEventListener('click',this.close.bind(this));
+      headerElem.appendChild(closeElem);
     }
     setHtml(content,contentElem);
   }
