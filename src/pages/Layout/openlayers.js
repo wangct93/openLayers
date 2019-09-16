@@ -1,4 +1,4 @@
-import {isArray, isNum, isString, loop, random} from "wangct-util";
+import {callFunc, isArray, isNum, isString, loop, random} from "wangct-util";
 import {featureEventTypeMap} from "./options";
 import './openlayers.less';
 
@@ -44,11 +44,11 @@ export default class CMap{
 
     new InfoWindow({
       map,
+      title:'标题',
       content:'wangct',
       position:[120.15127805298,-58.195605740793],
-      width:600,
-      height:300,
-    })
+    });
+
 
     const circle = new Circle({
       map,
@@ -57,6 +57,16 @@ export default class CMap{
       fillColor:'yellow',
       cursor:'pointer',
     });
+
+    circle.on('click',() => {
+      new InfoWindow({
+        map,
+        title:'标题',
+        content:'wangct',
+        position:[120.15127805298,-58.195605740793],
+      });
+    })
+
     //
     // circle.on('click',(c) => {
     //   console.log(c);
@@ -215,15 +225,55 @@ class InfoWindow{
     const popup = new OpenLayers.Popup(options.id,
       toLonLat(options.position),
       toSize([0,0]),
-      this.getContent(),
+      this.getLayoutContent(),
       false,
       null);
     this.setPopup(popup);
+    this.setContent();
+    this.setSize();
   }
 
-  getContent(){
-    const options = this.getOptions();
-    return `<div class="cmap-infowindow" style="height:${options.height}px;width:${options.width}px">${options.content}</div>`;
+  getLayoutContent(){
+    return `<div class="cmap-infowindow"><div class="cmap-infowindow-content"></div></div>`;
+  }
+
+  getContentElem(){
+    return this.getPopup().contentDiv.children[0];
+  }
+
+  setContent(){
+    const {title,content} = this.getOptions();
+    const elem = this.getContentElem();
+    window.e = elem;
+    const contentElem = elem.querySelector('.cmap-infowindow-content');
+    const setHtml = (child,parent) => {
+      if(child instanceof Element){
+        parent.appendChild(child);
+      }else if(child){
+        const text = document.createTextNode(child);
+        parent.appendChild(text);
+      }
+    };
+    if(title){
+      const headerElem = document.createElement('div');
+      contentElem.parentNode.insertBefore(headerElem,contentElem);
+      headerElem.className = 'cmap-infowindow-header';
+      headerElem.innerHTML = '<div class="cmap-infowindow-close"></div>';
+      headerElem.children[0].addEventListener('click',this.close.bind(this));
+      setHtml(title,headerElem);
+    }
+    setHtml(content,contentElem);
+  }
+
+  setSize(){
+    const {width,height} = this.getOptions();
+    const elem = this.getContentElem();
+    if(width){
+      elem.style.width = width + 'px';
+    }
+    if(height){
+      elem.style.height = height + 'px';
+    }
   }
 
   setPopup(popup){
@@ -259,6 +309,7 @@ class InfoWindow{
 
   close(){
     this.getPopup().hide();
+    callFunc(this.getOptions().onClose);
   }
 
   open(){

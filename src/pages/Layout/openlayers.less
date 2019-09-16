@@ -1,5 +1,5 @@
-
-@border:1px solid #ddd;
+@borderColor:#ddd;
+@border:1px solid @borderColor;
 
 :global{
   .openlayer-text-content{
@@ -27,9 +27,92 @@
     }
   }
   .cmap-infowindow{
+    @caretWidth:16px;
+    @caretHeight:10px;
+
+    position: absolute;
+    left: 0;
+    top: -@caretHeight;
     background-color: #fff;
     border: @border;
     transform: translate(-50%,-100%);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    min-width: 200px;
+
+
+    &:after,
+    &:before{
+      content:'';
+      position: absolute;
+      left: 50%;
+      bottom:-@caretHeight - 1;
+      margin-left: -@caretWidth / 2;
+      border-left:@caretWidth / 2 solid transparent;
+      border-right:@caretWidth / 2 solid transparent;
+      border-top:@caretHeight solid @borderColor;
+    }
+
+    &:after{
+      border-top-color:#fff;
+      bottom:-@caretHeight + 1;
+    }
+
+    @headerHeight:34px;
+
+    .cmap-infowindow-header{
+      line-height: @headerHeight;
+      padding: 0 30px 0 10px;
+      border-bottom: @border;
+      position: relative;
+      background-color: #F9F9F9;
+    }
+
+    .cmap-infowindow-content{
+      flex:1;
+      padding:10px;
+      overflow: auto;
+    }
+
+    .cmap-infowindow-close{
+
+      @borderWidth:2px;
+      @radius:12px;
+
+      width: @radius;
+      height: @radius;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      margin-top: -@radius / 2;
+      cursor: pointer;
+
+      &:hover{
+        &:before,
+        &:after{
+          background-color:#333;
+        }
+      }
+
+
+      &:before,
+      &:after{
+        content:'';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height:@borderWidth;
+        background-color: #666;
+        transform: rotate(45deg);
+      }
+
+      &:after{
+        transform: rotate(-45deg);
+      }
+    }
+
   }
 }
